@@ -10,6 +10,15 @@
         "name": "Joost Thijssen",
         "email": "contact@squaretronics.com"
     },
+    "description": {
+        "en": "Flow card that triggers when new Homey apps are available.",
+        "nl": "Flow kaart die triggert als er nieuwe Homey apps zijn."
+    },
+    "images": {
+        "large": "./assets/images/large.jpg",
+        "small": "./assets/images/small.jpg"
+    },
+    "category": "tools",
 	"flow": {
 		"triggers": [
 			{
