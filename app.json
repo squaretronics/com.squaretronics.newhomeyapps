@@ -1,0 +1,36 @@
+{
+    "id": "com.squaretronics.newhomeyapps",
+    "name": {
+        "en": "New Homey Apps",
+		"nl": "Nieuwe Homey Apps"
+    },
+    "version": "1.0.0",
+    "compatibility": "1.x",
+    "author": {
+        "name": "Joost Thijssen",
+        "email": "contact@squaretronics.com"
+    },
+	"flow": {
+		"triggers": [
+			{
+				"id": "new_app",
+				"title": {
+					"en": "There's a new Homey app",
+					"nl": "Er is een nieuwe Homey app"
+				},
+				"tokens":
+				[
+					{
+						"name": "AppName",
+						"type": "string",
+						"title": {
+							"en": "App name",
+							"nl": "App naam"
+						},
+						"example": "Acme Corp."
+					}
+				]
+			}
+		]
+	}
+}
