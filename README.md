@@ -22,6 +22,7 @@ V1.1.0
 * Prevented crash when homey does not have a working internet connection and we try to make a new app request.
 * More labels! Now you can also use the unique App ID instead of the human friendly App Name.
 * Added another card that checks for app updates instead of new apps. (labels for App Name, App ID and Version)
+
 V1.0.0
 * Initial Release
 
