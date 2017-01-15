@@ -12,9 +12,10 @@ These ID's can be found in the address bar after you click on the app in the Ath
 
 for example, this app's URL is:
 'https://apps.athom.com/app/com.squaretronics.newhomeyapps'.
-Its unique App ID is 'com.squaretronics.newhomeyapps'.
+Therefore its unique App ID is 'com.squaretronics.newhomeyapps'.
 
 No need to donate, but if you feel like it anyway :)
+
 [![](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.me/squaretronics)
 
 ## Changelog:
