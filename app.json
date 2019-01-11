@@ -4,8 +4,8 @@
         "en": "New Homey Apps",
 		"nl": "Nieuwe Homey Apps"
     },
-    "version": "1.1.0",
-    "compatibility": "1.x",
+    "version": "1.1.1",
+    "compatibility": ">=1.5.0",
     "author": {
         "name": "Joost Thijssen",
         "email": "contact@squaretronics.com"
