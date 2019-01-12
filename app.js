@@ -133,10 +133,10 @@ class NewHomeyApps extends Homey.App{
 
         // Walk trough received apps
         var ItemCounter = 0;
-        while(ItemCounter<this.newapplications.length)
+        while(ItemCounter<data.length)
         {
             // Just some var to make it all a little more readable
-            var ActiveEntry = this.newapplications[ItemCounter];
+            var ActiveEntry = data[ItemCounter];
 
             // Validation
             if(
@@ -152,7 +152,7 @@ class NewHomeyApps extends Homey.App{
                     if(this.newapplications.indexOf(ActiveEntryID) === -1)
                     {
                         // Hah this one is new!
-                        NewApps.push(ActiveEntryID);
+                        this.newapplications.push(ActiveEntryID);
 
                         // Better check if the app name is available in preferred language
 
@@ -195,18 +195,6 @@ class NewHomeyApps extends Homey.App{
             this.logArray.shift();
         }
     }
-
-    saveLog(){
-        Homey.ManagerSettings.set('homeyappslogs',JSON.stringify(this.logArray));
-    }
-
-    deleteLog(){
-        Homey.ManagerSettings.unset('homeyappslogs');
-        return true;
-    }
-
-
-
 }
 
 module.exports = NewHomeyApps;
