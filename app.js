@@ -17,8 +17,6 @@ class NewHomeyApps extends Homey.App{
         this.updatedapplications = [];
         
         let log = this.getLogs();
-        this.newapps = [];
-        this.updatedapps = [];
 
         if(log != null &&log !== ""){
             try{
@@ -32,7 +30,7 @@ class NewHomeyApps extends Homey.App{
             this.api.retrieve().then((data)=>{
                 this.checkApplication(data);
             });
-        },1000 * 60);
+        },1000 * 60* 60);
 
         this.api.retrieve().then((data)=>{
             this.checkApplication(data);
@@ -58,16 +56,41 @@ class NewHomeyApps extends Homey.App{
         return Keys;
     }
 
+    triggerFlow(app,flowname){
+
+        let trigger = null;
+
+        let token = {};
+        token.AppID = app["_id"];
+        token.AppName = app["name"][this.preferedLanguage] ?app["name"][this.preferedLanguage] : app["name"]["en"];
+        token.AppVersion = app["version"]["number"];
+
+        switch(flowname){
+            case trigger_new_app:
+                this.doLog("New app (" + this.preferedLanguage + "): '" + token.AppName + "' (" + token.AppID + ")");
+                trigger = new Homey.FlowCardTrigger(trigger_new_app);
+                break;
+            case trigger_app_update:
+                this.doLog("An app has been updated. Lets trigger")
+                this.doLog("Updated app (" + this.preferedLanguage + "): '" +token.AppName  + "' (" + token.AppID + ")");
+                trigger = new Homey.FlowCardTrigger(trigger_app_update);
+                break;
+        }
+
+        trigger.register().trigger(token).catch(this.error).then(this.log(error));
+
+    }
+
     handleUpdates(data,newapplications){
         this.doLog("Start finding updated applications");
-        var CurrentAthomsUpdatedApps = [];
+        let CurrentAthomsUpdatedApps = [];
 
         // Walk trough received apps
-        var ItemCounter = 0;
+        let ItemCounter = 0;
         while(ItemCounter<data.length)
         {
             // Just some var to make it all a little more readable
-            var ActiveEntry = data[ItemCounter];
+            let ActiveEntry = data[ItemCounter];
 
             // validation
             if(
@@ -76,7 +99,7 @@ class NewHomeyApps extends Homey.App{
                 (ActiveEntry["version"] !== undefined) &&
                 (ActiveEntry["version"]["number"] !== undefined)
             ){
-                var ActiveEntryID = ActiveEntry["_id"];
+                let ActiveEntryID = ActiveEntry["_id"];
 
                 // Only act on new apps if this is not the first initiating request
                 if(NewHomeyApps.GetArrayKeys(this.updatedapplications).length)
@@ -98,19 +121,16 @@ class NewHomeyApps extends Homey.App{
                         )
                     ){
                         // Hah this one is updated!
-                        this.doLog("An app has been updated. Lets trigger");
-                        let token = {};
-                        token.AppID = ActiveEntryID;
-                        token.AppName = ActiveEntry["name"][this.preferedLanguage] ?ActiveEntryID["name"][this.preferedLanguage] : ActiveEntryID["name"]["en"];
-                        token.AppVersion = ActiveEntry["version"]["number"];
 
-                        this.doLog("Updated app (" + this.preferedLanguage + "): '" + ActiveEntry["name"][this.preferedLanguage] + "' (" + ActiveEntryID + ")");
-                        let updateTrigger = new Homey.FlowCardTrigger(trigger_app_update);
-                        updateTrigger.register().trigger(token).catch(this.error).then(this.log);
+                        this.triggerFlow(ActiveEntry,trigger_app_update);
+
+
                     }else{
                         this.doLog("No changes found");
                     }
                 }
+
+                this.doLog('Add it to the list of updates');
                 // Anyway, we saw it now so push it to the array with current apps
                 CurrentAthomsUpdatedApps[ActiveEntryID] = ActiveEntry["version"]["number"];
             }
@@ -157,17 +177,12 @@ class NewHomeyApps extends Homey.App{
 
                         // Better check if the app name is available in preferred language
 
-                        let token = {};
-                        token.AppID = ActiveEntryID;
-                        token.AppName = ActiveEntry["name"][this.preferedLanguage] ? ActiveEntry["name"][this.preferedLanguage] : ActiveEntry["name"]["en"];
-
-                        this.doLog("New app (" + this.preferedLanguage + "): '" + ActiveEntry["name"][this.preferedLanguage] + "' (" + ActiveEntryID + ")");
-                        let newappTrigger = new Homey.FlowCardTrigger(trigger_new_app);
-                        newappTrigger.register().trigger(token).catch(this.error).then(this.log);
+                        this.triggerFlow(ActiveEntry,trigger_new_app);
                     }
                 }
 
                 // Anyway, we saw it now so push it to the array with current apps
+                console.log('add it to the current apps');
                 CurrentAthomsNewApps.push(ActiveEntryID);
             }
             // Now go check the next one if present
