@@ -135,6 +135,7 @@ class NewHomeyApps extends Homey.App{
         var ItemCounter = 0;
         while(ItemCounter<data.length)
         {
+
             // Just some var to make it all a little more readable
             var ActiveEntry = data[ItemCounter];
 
