@@ -15,9 +15,12 @@ Therefore its unique App ID is 'com.squaretronics.newhomeyapps'.
 
 No need to donate, but if you feel like it anyway :)
 
-[![](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.me/squaretronics)
+[![](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Q67ZKATD9QVLY)
 
 ## Changelog:
+V1.2.0
+* Made the app ready for 2.x firmware
+
 V1.1.0
 * Prevented crash when homey does not have a working internet connection and we try to make a new app request.
 * More labels! Now you can also use the unique App ID instead of the human friendly App Name.
